@@ -62,6 +62,12 @@ body {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.logo:hover {
+    transform: scale(1.05);
 }
 
 .nav-menu {
@@ -120,6 +126,7 @@ body {
     position: relative;
     background: var(--gradient);
     overflow: hidden;
+    padding-top: 80px; /* Account for fixed navbar */
 }
 
 .hero::before {
@@ -129,13 +136,143 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><polygon fill="rgba(255,255,255,0.05)" points="0,1000 1000,800 1000,1000"/></svg>');
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><circle cx="850" cy="150" r="80" fill="rgba(255,255,255,0.05)"/><circle cx="200" cy="800" r="60" fill="rgba(255,255,255,0.03)"/><circle cx="700" cy="700" r="40" fill="rgba(255,255,255,0.04)"/></svg>');
     animation: float 20s ease-in-out infinite;
 }
 
+.hero::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(circle at 20% 20%, rgba(6, 182, 212, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(124, 58, 237, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(37, 99, 235, 0.2) 0%, transparent 50%);
+    animation: gradientShift 15s ease-in-out infinite alternate;
+}
+
+/* Floating particles */
+.hero .floating-particles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.hero .particle {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    animation: floatParticles 20s linear infinite;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.hero .particle:nth-child(1) {
+    width: 12px;
+    height: 12px;
+    left: 10%;
+    animation-delay: 0s;
+    animation-duration: 25s;
+    background: rgba(6, 182, 212, 0.3);
+}
+
+.hero .particle:nth-child(2) {
+    width: 16px;
+    height: 16px;
+    left: 20%;
+    animation-delay: 5s;
+    animation-duration: 30s;
+    background: rgba(124, 58, 237, 0.3);
+}
+
+.hero .particle:nth-child(3) {
+    width: 10px;
+    height: 10px;
+    left: 30%;
+    animation-delay: 10s;
+    animation-duration: 35s;
+    background: rgba(37, 99, 235, 0.3);
+}
+
+.hero .particle:nth-child(4) {
+    width: 14px;
+    height: 14px;
+    left: 50%;
+    animation-delay: 15s;
+    animation-duration: 28s;
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.hero .particle:nth-child(5) {
+    width: 18px;
+    height: 18px;
+    left: 70%;
+    animation-delay: 20s;
+    animation-duration: 32s;
+    background: rgba(6, 182, 212, 0.2);
+}
+
+.hero .particle:nth-child(6) {
+    width: 12px;
+    height: 12px;
+    left: 85%;
+    animation-delay: 8s;
+    animation-duration: 26s;
+    background: rgba(124, 58, 237, 0.2);
+}
+
 @keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-20px); }
+    0%, 100% { 
+        transform: translateY(0) rotate(0deg);
+    }
+    50% { 
+        transform: translateY(-30px) rotate(180deg);
+    }
+}
+
+@keyframes gradientShift {
+    0% {
+        background: 
+            radial-gradient(circle at 20% 20%, rgba(6, 182, 212, 0.3) 0%, transparent 50%),
+            radial-gradient(circle at 80% 80%, rgba(124, 58, 237, 0.3) 0%, transparent 50%),
+            radial-gradient(circle at 40% 40%, rgba(37, 99, 235, 0.2) 0%, transparent 50%);
+    }
+    50% {
+        background: 
+            radial-gradient(circle at 80% 30%, rgba(6, 182, 212, 0.4) 0%, transparent 60%),
+            radial-gradient(circle at 20% 70%, rgba(124, 58, 237, 0.4) 0%, transparent 60%),
+            radial-gradient(circle at 60% 20%, rgba(37, 99, 235, 0.3) 0%, transparent 60%);
+    }
+    100% {
+        background: 
+            radial-gradient(circle at 40% 80%, rgba(6, 182, 212, 0.2) 0%, transparent 40%),
+            radial-gradient(circle at 70% 20%, rgba(124, 58, 237, 0.2) 0%, transparent 40%),
+            radial-gradient(circle at 30% 60%, rgba(37, 99, 235, 0.4) 0%, transparent 40%);
+    }
+}
+
+@keyframes floatParticles {
+    0% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-100px) rotate(360deg);
+        opacity: 0;
+    }
 }
 
 .hero-container {
@@ -143,7 +280,7 @@ body {
     margin: 0 auto;
     padding: 0 2rem;
     position: relative;
-    z-index: 2;
+    z-index: 3;
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 4rem;
@@ -252,20 +389,63 @@ body {
 
 .cta-button {
     display: inline-block;
-    background: linear-gradient(135deg, var(--accent), var(--secondary));
+    background: linear-gradient(135deg, var(--accent-color), var(--secondary-color));
     color: white;
-    padding: 1rem 2rem;
+    padding: 1.2rem 2.5rem;
     border-radius: 50px;
     text-decoration: none;
-    font-weight: 600;
+    font-weight: 700;
+    font-size: 1.1rem;
     transition: all 0.3s ease;
-    border: 2px solid transparent;
-    box-shadow: 0 10px 30px rgba(6, 182, 212, 0.3);
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 15px 40px rgba(6, 182, 212, 0.4);
+    position: relative;
+    overflow: hidden;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 1rem;
+}
+
+.cta-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.6s ease;
+}
+
+.cta-button:hover::before {
+    left: 100%;
 }
 
 .cta-button:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 15px 40px rgba(6, 182, 212, 0.4);
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 20px 50px rgba(6, 182, 212, 0.6);
+    border-color: rgba(255, 255, 255, 0.6);
+}
+
+/* CTA Button Pulse Animation */
+@keyframes pulse {
+    0% {
+        box-shadow: 0 15px 40px rgba(6, 182, 212, 0.4);
+    }
+    50% {
+        box-shadow: 0 15px 40px rgba(6, 182, 212, 0.6);
+    }
+    100% {
+        box-shadow: 0 15px 40px rgba(6, 182, 212, 0.4);
+    }
+}
+
+.cta-button {
+    animation: pulse 2s infinite;
+}
+
+.cta-button:hover {
+    animation: none; /* Stop pulse on hover */
 }
 
 /* Sections */
@@ -756,10 +936,15 @@ body {
 
 /* Enhanced Mobile Responsiveness */
 @media (max-width: 1024px) {
+    .hero {
+        padding-top: 100px; /* Account for navbar on tablets */
+    }
+    
     .hero-container {
         grid-template-columns: 1fr;
         gap: 3rem;
         text-align: center;
+        padding: 0 2rem;
     }
     
     .hero-image {
@@ -778,6 +963,12 @@ body {
     
     .hero h1 {
         font-size: 3rem;
+        line-height: 1.1;
+    }
+    
+    .hero .subtitle {
+        font-size: 1.1rem;
+        line-height: 1.5;
     }
 }
 
@@ -822,23 +1013,27 @@ body {
     }
 
     .hero {
-        min-height: 100vh;
-        padding: 2rem 0;
+        min-height: calc(100vh - 80px); /* Adjust for navbar */
+        padding: 100px 0 2rem 0; /* More top padding for mobile */
+        justify-content: center;
     }
 
     .hero-container {
         gap: 2rem;
         padding: 0 1rem;
+        min-height: auto;
     }
 
     .hero h1 {
         font-size: 2.5rem;
         margin-bottom: 0.8rem;
+        line-height: 1.2;
     }
 
     .hero .subtitle {
         font-size: 1.1rem;
         margin-bottom: 1.5rem;
+        line-height: 1.5;
     }
     
     .profile-photo,
@@ -848,8 +1043,13 @@ body {
     }
 
     .cta-button {
-        padding: 1rem 2rem;
+        padding: 1.1rem 2.2rem;
         font-size: 1rem;
+        font-weight: 700;
+        margin-top: 1.5rem;
+        width: auto;
+        min-width: 200px;
+        text-align: center;
     }
 
     .cards-grid {
@@ -916,13 +1116,26 @@ body {
         padding: 0 1rem;
     }
     
+    .hero {
+        padding: 120px 0 2rem 0; /* Even more top padding for small screens */
+        min-height: calc(100vh - 60px);
+    }
+    
+    .hero-container {
+        gap: 1.5rem;
+        padding: 0 1rem;
+    }
+    
     .hero h1 {
         font-size: 2rem;
-        line-height: 1.3;
+        line-height: 1.2;
+        margin-bottom: 1rem;
     }
 
     .hero .subtitle {
         font-size: 1rem;
+        line-height: 1.4;
+        margin-bottom: 1.5rem;
     }
     
     .profile-photo,
@@ -932,8 +1145,16 @@ body {
     }
     
     .cta-button {
-        padding: 0.8rem 1.5rem;
-        font-size: 0.9rem;
+        padding: 1rem 2rem;
+        font-size: 0.95rem;
+        font-weight: 700;
+        margin-top: 2rem;
+        width: 100%;
+        max-width: 280px;
+        text-align: center;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
     }
     
     .card,

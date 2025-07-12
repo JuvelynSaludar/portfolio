@@ -278,3 +278,88 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
+// Enhanced Hero Background Animation
+document.addEventListener('DOMContentLoaded', function() {
+    const hero = document.querySelector('.hero');
+    const particles = document.querySelectorAll('.particle');
+    
+    // Mouse interaction with background
+    if (hero) {
+        hero.addEventListener('mousemove', function(e) {
+            const rect = hero.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            const moveX = (x - rect.width / 2) * 0.01;
+            const moveY = (y - rect.height / 2) * 0.01;
+            
+            hero.style.backgroundPosition = `${moveX}px ${moveY}px`;
+            
+            // Add subtle parallax to particles
+            particles.forEach((particle, index) => {
+                const speed = (index + 1) * 0.02;
+                particle.style.transform = `translate(${moveX * speed}px, ${moveY * speed}px)`;
+            });
+        });
+        
+        // Reset on mouse leave
+        hero.addEventListener('mouseleave', function() {
+            hero.style.backgroundPosition = '0px 0px';
+            particles.forEach(particle => {
+                particle.style.transform = 'translate(0px, 0px)';
+            });
+        });
+    }
+    
+    // Add random sparkle effects
+    function createSparkle() {
+        if (!hero) return;
+        
+        const sparkle = document.createElement('div');
+        sparkle.className = 'sparkle';
+        sparkle.style.cssText = `
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 2;
+            left: ${Math.random() * 100}%;
+            top: ${Math.random() * 100}%;
+            animation: sparkleAnimation 2s linear forwards;
+        `;
+        
+        hero.appendChild(sparkle);
+        
+        setTimeout(() => {
+            if (sparkle.parentNode) {
+                sparkle.parentNode.removeChild(sparkle);
+            }
+        }, 2000);
+    }
+    
+    // Create sparkles periodically
+    setInterval(createSparkle, 3000);
+});
+
+// Add sparkle animation CSS
+const sparkleStyle = document.createElement('style');
+sparkleStyle.textContent = `
+    @keyframes sparkleAnimation {
+        0% {
+            opacity: 0;
+            transform: scale(0) rotate(0deg);
+        }
+        50% {
+            opacity: 1;
+            transform: scale(1) rotate(180deg);
+        }
+        100% {
+            opacity: 0;
+            transform: scale(0) rotate(360deg);
+        }
+    }
+`;
+document.head.appendChild(sparkleStyle);
