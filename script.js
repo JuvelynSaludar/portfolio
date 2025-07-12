@@ -187,3 +187,94 @@ if ('serviceWorker' in navigator) {
         console.log('Service Worker support detected');
     });
 }
+
+// Contact form handling
+document.addEventListener('DOMContentLoaded', function() {
+    const contactForm = document.getElementById('contactForm');
+    
+    if (contactForm) {
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(contactForm);
+            const name = formData.get('name');
+            const email = formData.get('email');
+            const subject = formData.get('subject');
+            const message = formData.get('message');
+            
+            // Create mailto link with form data
+            const mailtoLink = `mailto:juvelyn.saludar@email.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(
+                `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`
+            )}`;
+            
+            // Open email client
+            window.location.href = mailtoLink;
+            
+            // Show success message
+            showSuccessMessage();
+            
+            // Reset form
+            contactForm.reset();
+        });
+    }
+});
+
+// Show success message
+function showSuccessMessage() {
+    const submitBtn = document.querySelector('.contact-submit-btn');
+    const originalText = submitBtn.innerHTML;
+    
+    submitBtn.innerHTML = '<i class="fas fa-check"></i> Message Sent!';
+    submitBtn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+    
+    setTimeout(() => {
+        submitBtn.innerHTML = originalText;
+        submitBtn.style.background = 'linear-gradient(135deg, var(--accent-color), var(--secondary-color))';
+    }, 3000);
+}
+
+// Form validation enhancements
+function validateForm() {
+    const inputs = document.querySelectorAll('.contact-form input, .contact-form textarea');
+    let isValid = true;
+    
+    inputs.forEach(input => {
+        if (!input.value.trim()) {
+            input.style.borderColor = '#ef4444';
+            isValid = false;
+        } else {
+            input.style.borderColor = 'rgba(255, 255, 255, 0.3)';
+        }
+        
+        // Email validation
+        if (input.type === 'email' && input.value.trim()) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(input.value)) {
+                input.style.borderColor = '#ef4444';
+                isValid = false;
+            }
+        }
+    });
+    
+    return isValid;
+}
+
+// Add real-time validation
+document.addEventListener('DOMContentLoaded', function() {
+    const formInputs = document.querySelectorAll('.contact-form input, .contact-form textarea');
+    
+    formInputs.forEach(input => {
+        input.addEventListener('blur', function() {
+            if (this.value.trim()) {
+                this.style.borderColor = 'var(--accent-color)';
+            } else {
+                this.style.borderColor = '#ef4444';
+            }
+        });
+        
+        input.addEventListener('focus', function() {
+            this.style.borderColor = 'var(--accent-color)';
+        });
+    });
+});
