@@ -490,6 +490,36 @@ body {
     margin-top: 2rem;
 }
 
+/* Expandable Content */
+.expandable-content .full-text {
+    display: none;
+}
+
+.expandable-content.expanded .short-text {
+    display: none;
+}
+
+.expandable-content.expanded .full-text {
+    display: inline;
+}
+
+.expand-btn {
+    background: none;
+    border: none;
+    color: var(--primary-color);
+    cursor: pointer;
+    padding: 0;
+    margin-left: 5px;
+    font-size: 0.9em;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.expand-btn:hover {
+    text-decoration: underline;
+    opacity: 0.8;
+}
+
 .card {
     background: white;
     padding: 2rem;
