@@ -168,6 +168,16 @@ window.addEventListener('load', revealSections);
 document.addEventListener('DOMContentLoaded', function() {
     console.log('Portfolio loaded successfully!');
     
+    // Initialize expand/collapse functionality
+    const expandButtons = document.querySelectorAll('.expand-btn');
+    expandButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const content = this.parentElement;
+            content.classList.toggle('expanded');
+            this.textContent = content.classList.contains('expanded') ? 'Show Less' : 'Show More';
+        });
+    });
+    
     // Add loading class removal
     document.body.classList.add('loaded');
     
